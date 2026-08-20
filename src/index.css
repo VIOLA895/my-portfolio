@@ -1,0 +1,83 @@
+:root {
+  font-family:
+    Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --background: #f7f7f5;
+  --foreground: #111111;
+  --muted: #666666;
+  --subtle: #888888;
+
+  --border: rgba(17, 17, 17, 0.08);
+
+  --surface: rgba(247, 247, 245, 0.82);
+  --surface-solid: #ffffff;
+
+  --grid: rgba(17, 17, 17, 0.035);
+
+  --button: #111111;
+  --button-hover: #292929;
+  --button-text: #ffffff;
+
+  color: var(--foreground);
+  background: var(--background);
+}
+
+[data-theme="dark"] {
+  --background: #101010;
+  --foreground: #f4f4f2;
+  --muted: #a0a0a0;
+  --subtle: #777777;
+
+  --border: rgba(255, 255, 255, 0.1);
+
+  --surface: rgba(16, 16, 16, 0.82);
+  --surface-solid: #181818;
+
+  --grid: rgba(255, 255, 255, 0.045);
+
+  --button: #f4f4f2;
+  --button-hover: #ffffff;
+  --button-text: #111111;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+
+  background: var(--background);
+  color: var(--foreground);
+
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+button,
+a {
+  font-family: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
