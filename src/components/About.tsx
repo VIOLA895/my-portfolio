@@ -132,7 +132,7 @@ function About() {
             </p>
 
             <p>
-              I care about the details — from the way an interface responds to a
+              I care about the details from the way an interface responds to a
               user's actions to the structure and maintainability of the code
               behind it.
             </p>

@@ -141,6 +141,7 @@ function Contact() {
           }}
         >
           <span>BASED IN NAIROBI</span>
+          
           <span>AVAILABLE FOR SELECT PROJECTS</span>
         </motion.div>
       </div>

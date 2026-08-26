@@ -1,27 +1,51 @@
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+
+import IntroLoader from "./components/IntroLoader";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import "./App.css";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
   return (
     <>
-      <Navbar />
+      <AnimatePresence>
+        {loading && (
+          <IntroLoader
+            onComplete={() => {
+              setLoading(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
 
-      <main>
-        <Hero />
+      <motion.div
+        className="portfolio"
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: loading ? 0 : 1,
+        }}
+        transition={{
+          duration: 0.8,
+          delay: loading ? 0 : 0.15,
+        }}
+      >
+        <Navbar />
 
-        <About />
-
-        <Projects />
-
-        <Contact />
+        <main>
+          <Hero />
+          <About />
+          <Projects />
+          <Contact />
+        </main>
 
         <Footer />
-      </main>
+      </motion.div>
     </>
   );
 }

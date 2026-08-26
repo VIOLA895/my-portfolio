@@ -1,49 +1,60 @@
 import { useState } from "react";
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 function Hero() {
-  const [mousePosition, setMousePosition] = useState({
-    x: 0,
-    y: 0,
+  const [mouseInside, setMouseInside] = useState(false);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const smoothX = useSpring(mouseX, {
+    stiffness: 80,
+    damping: 20,
+  });
+
+  const smoothY = useSpring(mouseY, {
+    stiffness: 80,
+    damping: 20,
   });
 
   const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
-    const { clientX, clientY } = event;
+    const rect = event.currentTarget.getBoundingClientRect();
 
-    setMousePosition({
-      x: clientX,
-      y: clientY,
-    });
+    mouseX.set(event.clientX - rect.left);
+    mouseY.set(event.clientY - rect.top);
   };
 
   return (
-    <section className="hero" id="home" onMouseMove={handleMouseMove}>
-      {/* Cursor glow */}
+    <section
+      className="hero-new"
+      id="home"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setMouseInside(true)}
+      onMouseLeave={() => setMouseInside(false)}
+    >
+      {/* Animated background */}
+      <div className="hero-new-grid" />
+
       <motion.div
-        className="hero-cursor-glow"
-        animate={{
-          x: mousePosition.x - 200,
-          y: mousePosition.y - 200,
+        className="hero-new-glow"
+        style={{
+          x: smoothX,
+          y: smoothY,
         }}
-        transition={{
-          type: "spring",
-          stiffness: 45,
-          damping: 28,
-          mass: 0.6,
+        animate={{
+          opacity: mouseInside ? 1 : 0,
         }}
       />
 
-      {/* Background grid */}
-      <div className="hero-grid" />
-
       {/* Decorative orbit */}
       <motion.div
-        className="hero-orbit"
+        className="hero-new-orbit"
         animate={{
           rotate: 360,
         }}
         transition={{
-          duration: 25,
+          duration: 30,
           repeat: Infinity,
           ease: "linear",
         }}
@@ -51,18 +62,21 @@ function Hero() {
         <span />
       </motion.div>
 
-      {/* Hero content */}
+      {/* Navigation marker */}
       <motion.div
-        className="hero-content"
+        className="hero-new-index"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{
-          duration: 0.8,
-        }}
+        transition={{ delay: 0.6 }}
       >
-        {/* Eyebrow */}
+        
+        <span>INTRO</span>
+      </motion.div>
+
+      {/* Main heading */}
+      <div className="hero-new-content">
         <motion.p
-          className="hero-eyebrow"
+          className="hero-new-kicker"
           initial={{
             opacity: 0,
             y: 20,
@@ -72,143 +86,125 @@ function Hero() {
             y: 0,
           }}
           transition={{
-            duration: 0.6,
             delay: 0.3,
-            ease: [0.22, 1, 0.36, 1],
+            duration: 0.7,
           }}
         >
-          SOFTWARE ENGINEER · FRONT-END DEVELOPER
+          SOFTWARE ENGINEER / FRONT-END DEVELOPER
         </motion.p>
 
-        {/* Main heading */}
-        <h1 className="hero-title">
+        <h1 className="hero-new-title">
           <motion.span
-            className="hero-title-line"
             initial={{
               opacity: 0,
-              y: 70,
+              x: -80,
             }}
             animate={{
               opacity: 1,
-              y: 0,
+              x: 0,
             }}
             transition={{
-              duration: 0.8,
               delay: 0.45,
+              duration: 1,
               ease: [0.22, 1, 0.36, 1],
             }}
           >
-            I build digital
+            VIOLA
           </motion.span>
 
           <motion.span
-            className="hero-title-line hero-title-muted"
+            className="hero-new-outline"
             initial={{
               opacity: 0,
-              y: 70,
+              x: 80,
             }}
             animate={{
               opacity: 1,
-              y: 0,
+              x: 0,
             }}
             transition={{
-              duration: 0.8,
               delay: 0.58,
+              duration: 1,
               ease: [0.22, 1, 0.36, 1],
             }}
           >
-            experiences
-          </motion.span>
-
-          <motion.span
-            className="hero-title-line"
-            initial={{
-              opacity: 0,
-              y: 70,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.71,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
-            that feel different.
+            KAMBUNI
           </motion.span>
         </h1>
 
-        {/* Description */}
-        <motion.p
-          className="hero-description"
-          initial={{
-            opacity: 0,
-            y: 25,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.7,
-            delay: 0.9,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          I&apos;m Viola Kambuni, a developer who enjoys turning ideas into
-          thoughtful, interactive products with clean code and purposeful
-          design.
-        </motion.p>
-
-        {/* Actions */}
         <motion.div
-          className="hero-actions"
+          className="hero-new-bottom"
           initial={{
             opacity: 0,
-            y: 20,
+            y: 30,
           }}
           animate={{
             opacity: 1,
             y: 0,
           }}
           transition={{
-            duration: 0.6,
-            delay: 1.05,
-            ease: [0.22, 1, 0.36, 1],
+            delay: 0.9,
+            duration: 0.8,
           }}
         >
+          <p>
+            I build thoughtful digital products where
+            <span> design, interaction and technology </span>
+            come together.
+          </p>
+
           <motion.a
             href="#projects"
-            className="hero-primary-button"
+            className="hero-new-work-link"
             whileHover={{
-              y: -3,
+              scale: 1.04,
             }}
             whileTap={{
-              scale: 0.98,
+              scale: 0.96,
             }}
           >
-            <span>Explore my work</span>
-
-            <span className="hero-button-arrow">↗</span>
-          </motion.a>
-
-          <motion.a
-            href="#contact"
-            className="hero-secondary-button"
-            whileHover={{
-              x: 4,
-            }}
-          >
-            Get in touch
+            <span>EXPLORE MY WORK</span>
+            <ArrowUpRight size={18} />
           </motion.a>
         </motion.div>
+      </div>
+
+      {/* Floating technical information */}
+      <motion.div
+        className="hero-tech hero-tech-one"
+        animate={{
+          y: [0, -12, 0],
+          rotate: [0, 2, 0],
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <span>LAT</span>
+        <strong>-1.2921</strong>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
-        className="hero-side-note"
+        className="hero-tech hero-tech-two"
+        animate={{
+          y: [0, 10, 0],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <span>LNG</span>
+        <strong>36.8219</strong>
+      </motion.div>
+
+      {/* Scroll */}
+      <motion.a
+        href="#about"
+        className="hero-scroll"
         initial={{
           opacity: 0,
         }}
@@ -216,31 +212,26 @@ function Hero() {
           opacity: 1,
         }}
         transition={{
-          duration: 1,
           delay: 1.3,
         }}
       >
-        <span>SCROLL TO EXPLORE</span>
+        <span>SCROLL</span>
 
-        <div className="scroll-line" />
-      </motion.div>
+        <motion.div
+          animate={{
+            y: [0, 8, 0],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+          }}
+        >
+          <ArrowDownRight size={18} />
+        </motion.div>
+      </motion.a>
 
       {/* Year */}
-      <motion.div
-        className="hero-year"
-        initial={{
-          opacity: 0,
-        }}
-        animate={{
-          opacity: 1,
-        }}
-        transition={{
-          duration: 1,
-          delay: 1.3,
-        }}
-      >
-        {new Date().getFullYear()}
-      </motion.div>
+      <div className="hero-new-year">2026</div>
     </section>
   );
 }

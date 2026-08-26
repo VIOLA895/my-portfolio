@@ -1,5 +1,12 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Code2 } from "lucide-react";
+import {
+  ArrowUpRight,
+  Code2,
+  CloudSun,
+  Trophy,
+  Sprout,
+  Activity,
+} from "lucide-react";
 
 type Project = {
   number: string;
@@ -9,6 +16,8 @@ type Project = {
   category: string;
   github: string;
   live?: string;
+  icon: React.ReactNode;
+  accent: "lime" | "violet" | "cyan" | "orange";
 };
 
 const projects: Project[] = [
@@ -16,20 +25,48 @@ const projects: Project[] = [
     number: "01",
     title: "ApexOne",
     description:
-      "An interactive Formula 1 platform that makes the sport easier to understand while giving users access to race schedules, driver performance, Grand Prix statistics, and beginner-friendly F1 lessons.",
-    technologies: ["React", "JavaScript", "React Router", "OpenF1 API", "CSS"],
+      "An interactive Formula 1 platform designed to make the sport easier to understand through beginner-friendly lessons, driver statistics, race information and team data.",
+    technologies: ["React", "JavaScript", "React Router", "OpenF1"],
     category: "Web Application",
     github: "https://github.com/VIOLA895/ApexOne",
     live: "https://apex-one-rho.vercel.app/",
+    icon: <Trophy size={22} />,
+    accent: "lime",
   },
   {
     number: "02",
     title: "AgriCare Hub",
     description:
-      "A digital agricultural platform bringing farming information, crop and livestock management, weather insights, and a farmer community together in one accessible experience.",
-    technologies: ["React", "JavaScript", "CSS", "Responsive Design"],
+      "A digital agricultural platform combining crop management, livestock management, weather insights and farmer communication in one experience.",
+    technologies: ["React", "JavaScript", "CSS", "Responsive UI"],
     category: "Agricultural Platform",
     github: "https://github.com/VIOLA895/agricare-hub",
+    icon: <Sprout size={22} />,
+    accent: "lime",
+  },
+  {
+    number: "03",
+    title: "Atmos Weather",
+    description:
+      "A modern weather experience focused on clear forecasts, atmospheric conditions and useful weather information through a polished responsive interface.",
+    technologies: ["Next.js", "TypeScript", "API", "CSS"],
+    category: "Weather Application",
+    github: "https://github.com/VIOLA895/atmos-weather",
+    live: "https://atmos-weather-fawn.vercel.app/",
+    icon: <CloudSun size={22} />,
+    accent: "cyan",
+  },
+  {
+    number: "04",
+    title: "Predict Your Game",
+    description:
+      "A football prediction platform that evaluates teams and matchups to generate predictions while ranking previous predictions and results.",
+    technologies: ["React", "JavaScript", "Prediction Logic", "LocalStorage"],
+    category: "Sports Application",
+    github: "https://github.com/VIOLA895/Predict-Your-Game",
+    live: "https://predictyourgame.netlify.app/",
+    icon: <Activity size={22} />,
+    accent: "violet",
   },
 ];
 
@@ -37,51 +74,43 @@ function Projects() {
   return (
     <section className="projects" id="projects">
       <div className="projects-container">
-        {/* SECTION HEADER */}
+        {/* HEADER */}
 
         <motion.div
-          className="projects-heading"
-          initial={{
-            opacity: 0,
-            y: 30,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.3,
-          }}
-          transition={{
-            duration: 0.7,
-          }}
+          className="projects-heading-new"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
         >
-          <div className="section-marker">
-            <span>02</span>
-            <span>SELECTED WORK</span>
+          <div>
+            <div className="projects-section-marker">
+              <span>02</span>
+              <span>SELECTED WORK</span>
+            </div>
+
+            <h2 className="projects-title">
+              Things I&apos;ve
+              <span> built.</span>
+            </h2>
           </div>
 
-          <p className="projects-intro">
-            A selection of things I&apos;ve built, experimented with, and
-            learned from.
+          <p className="projects-intro-new">
+            A collection of products, experiments and interfaces I&apos;ve
+            designed and developed.
           </p>
         </motion.div>
 
-        {/* PROJECTS */}
+        {/* PROJECT GRID */}
 
-        <div className="project-list">
+        <div className="projects-grid-new">
           {projects.map((project, index) => (
             <motion.article
               key={project.title}
-              className={
-                index === 0
-                  ? "featured-project"
-                  : "featured-project featured-project-secondary"
-              }
+              className={`project-card-new ${index === 0 ? "project-card-featured" : ""}`}
               initial={{
                 opacity: 0,
-                y: 60,
+                y: 45,
               }}
               whileInView={{
                 opacity: 1,
@@ -92,119 +121,79 @@ function Projects() {
                 amount: 0.15,
               }}
               transition={{
-                duration: 0.8,
-                delay: index * 0.1,
+                duration: 0.65,
+                delay: index * 0.08,
                 ease: [0.22, 1, 0.36, 1],
               }}
+              whileHover={{
+                y: -8,
+              }}
             >
-              {/* PROJECT VISUAL */}
+              {/* CARD VISUAL */}
 
-              <div className="project-visual">
-                <div className="project-visual-grid" />
+              <div className={`project-card-visual ${project.accent}`}>
+                <div className="project-card-grid" />
 
-                <div className="project-visual-content">
-                  <div className="project-window">
-                    <div className="window-top">
-                      <span />
-                      <span />
-                      <span />
-                    </div>
+                <motion.div
+                  className="project-glow"
+                  initial={{ opacity: 0.4 }}
+                  whileHover={{
+                    opacity: 0.9,
+                    scale: 1.15,
+                  }}
+                  transition={{ duration: 0.4 }}
+                />
 
-                    <div className="window-content">
-                      <div className="window-sidebar">
-                        <div className="window-logo">
-                          {project.title === "ApexOne" ? "A1" : "AC"}
-                        </div>
+                <motion.div
+                  className="project-icon-box"
+                  whileHover={{
+                    rotate: -5,
+                    scale: 1.08,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 15,
+                  }}
+                >
+                  {project.icon}
+                </motion.div>
 
-                        <div className="window-line" />
-                        <div className="window-line short" />
-                        <div className="window-line" />
-                        <div className="window-line short" />
-                      </div>
+                <div className="project-card-number">{project.number}</div>
 
-                      <div className="window-main">
-                        <div className="window-header">
-                          <span>
-                            {project.title === "ApexOne"
-                              ? "RACE WEEKEND"
-                              : "AGRICULTURE HUB"}
-                          </span>
-
-                          <span>2026</span>
-                        </div>
-
-                        <div className="window-title">
-                          {project.title === "ApexOne"
-                            ? "FORMULA 1"
-                            : "AGRICARE"}
-                        </div>
-
-                        <div className="window-cards">
-                          <div className="window-card">
-                            <span>01</span>
-
-                            <strong>
-                              {project.title === "ApexOne"
-                                ? "Drivers"
-                                : "Crops"}
-                            </strong>
-                          </div>
-
-                          <div className="window-card">
-                            <span>02</span>
-
-                            <strong>
-                              {project.title === "ApexOne"
-                                ? "Teams"
-                                : "Livestock"}
-                            </strong>
-                          </div>
-
-                          <div className="window-card">
-                            <span>03</span>
-
-                            <strong>
-                              {project.title === "ApexOne"
-                                ? "Results"
-                                : "Community"}
-                            </strong>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="project-number">{project.number}</div>
+                <div className="project-card-orbit" />
               </div>
 
-              {/* PROJECT INFORMATION */}
+              {/* CARD CONTENT */}
 
-              <div className="featured-project-info">
-                <div className="project-category">{project.category}</div>
+              <div className="project-card-content">
+                <div className="project-card-category">{project.category}</div>
 
-                <h2>{project.title}</h2>
+                <div className="project-card-title-row">
+                  <h3>{project.title}</h3>
+
+                  <motion.div
+                    className="project-arrow"
+                    whileHover={{
+                      x: 4,
+                      y: -4,
+                    }}
+                  >
+                    <ArrowUpRight size={17} />
+                  </motion.div>
+                </div>
 
                 <p>{project.description}</p>
 
-                {/* TECHNOLOGIES */}
-
-                <div className="project-technologies">
+                <div className="project-card-tech">
                   {project.technologies.map((technology) => (
                     <span key={technology}>{technology}</span>
                   ))}
                 </div>
 
-                {/* PROJECT LINKS */}
-
-                <div className="project-links">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="project-link"
-                  >
-                    <Code2 size={17} />
+                <div className="project-card-links">
+                  <a href={project.github} target="_blank" rel="noreferrer">
+                    <Code2 size={15} />
                     GitHub
                   </a>
 
@@ -213,10 +202,10 @@ function Projects() {
                       href={project.live}
                       target="_blank"
                       rel="noreferrer"
-                      className="project-link primary"
+                      className="project-live-link"
                     >
-                      View project
-                      <ArrowUpRight size={17} />
+                      Live project
+                      <ArrowUpRight size={14} />
                     </a>
                   )}
                 </div>
@@ -224,6 +213,22 @@ function Projects() {
             </motion.article>
           ))}
         </div>
+
+        {/* BOTTOM */}
+
+        <motion.div
+          className="projects-bottom"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+        >
+          <span>MORE PROJECTS COMING</span>
+
+          <div className="projects-bottom-line" />
+
+          <span>04 / 04</span>
+        </motion.div>
       </div>
     </section>
   );
