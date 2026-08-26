@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { Analytics } from "@vercel/analytics/react";
 
 import IntroLoader from "./components/IntroLoader";
 import Navbar from "./components/Navbar";
@@ -46,6 +47,7 @@ function App() {
 
         <Footer />
       </motion.div>
+      <Analytics />
     </>
   );
 }
